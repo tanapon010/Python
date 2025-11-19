@@ -58,7 +58,7 @@ st.markdown("""
 
 st.markdown('<div class="title-box">🌸 ระบบจำแนกดอกไม้ (Iris Classification)</div>', unsafe_allow_html=True)
 
-st.image("./img/Tanapon.jpg", width=150)
+st.markdown("<center><img src='./img/Tanapon.jpg' width='150'></center>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align:center;'>by Tanapon</h4>", unsafe_allow_html=True)
 st.markdown("---")
 
@@ -91,7 +91,6 @@ st.markdown("")
 dt = pd.read_csv("./data/iris.csv")
 st.dataframe(dt.head(10))
 
-# รวมข้อมูล
 dx = [
     dt['petallength'].sum(),
     dt['petalwidth'].sum(),
@@ -132,7 +131,6 @@ if st.button("🔍 ทำนายผลดอกไม้"):
 
    st.success(f"🌼 ผลการทำนาย: **{output[0]}**")
 
-   # แสดงภาพตามผลลัพธ์
    if output[0] == 'Setosa':
         st.image("./img/iris3.jpg", caption="Setosa")
    elif output[0] == 'Versicolor':

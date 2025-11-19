@@ -61,7 +61,7 @@ st.markdown('<div class="title-box">🌸 ระบบจำแนกดอกไ
 # รูปตรงกลาง
 col1, col2, col3 = st.columns([1.6,1,1])
 with col2:
-    st.image("./img/Tanapon.jpg", width=150)
+    st.image("./img/Tanapon.jpg", width=200)
 
 # ชื่อกลาง
 st.markdown("<h4 style='text-align:center;'>by Tanapon</h4>", unsafe_allow_html=True)

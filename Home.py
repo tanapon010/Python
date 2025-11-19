@@ -68,7 +68,7 @@ st.header("📌 ตัวอย่างข้อมูลดอกไม้")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-   st.markdown('<div class="iris-card"><h4>Versicolor</h4>', unsafe_allow_html=True)
+   st.markdown('<div class="iris-card" style=color:black><h4>Versicolor</h4>', unsafe_allow_html=True)
    st.image("./img/iris1.jpg")
    st.markdown("</div>", unsafe_allow_html=True)
 

@@ -59,7 +59,7 @@ st.markdown("""
 st.markdown('<div class="title-box">🌸 ระบบจำแนกดอกไม้ (Iris Classification)</div>', unsafe_allow_html=True)
 
 # รูปตรงกลาง
-col1, col2, col3 = st.columns([1,1,1])
+col1, col2, col3 = st.columns([2,1,1])
 with col2:
     st.image("./img/Tanapon.jpg", width=150)
 

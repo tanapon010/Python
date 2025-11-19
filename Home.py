@@ -51,7 +51,7 @@ else:
     st.write("ไม่แสดงข้อมูล")
 
 html_8 = """
-<div style="background-color:#6BD5DA;padding:15px;border-radius:15px 15px 15px 15px;border-style:'solid';border-color:black">
+<div style="background-color:#FF69B4;padding:15px;border-radius:15px 15px 15px 15px;border-style:'solid';border-color:black">
 <center><h5>ทำนายข้อมูล</h5></center>
 </div>
 """

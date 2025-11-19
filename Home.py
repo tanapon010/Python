@@ -2,129 +2,145 @@ from sklearn.neighbors import KNeighborsClassifier
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
-# ================================
-#   PAGE CONFIG
-# ================================
-st.set_page_config(
-    page_title="Iris Classification by Tanapon",
-    page_icon="🌸",
-    layout="wide",
-)
-
-# ================================
-#   CUSTOM CSS
-# ================================
+# ------------------ CUSTOM CSS ------------------
 st.markdown("""
-<style>
-    .title-main {
-        font-size: 38px;
-        font-weight: bold;
-        color: #2E86C1;
+    <style>
+    .main {
+        background-color: #F8F8F8;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .title-box {
+        background: linear-gradient(90deg, #00d4ff, #0080ff);
+        padding: 15px;
+        border-radius: 15px;
+        color: white;
         text-align: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .sub-box {
+        background: #33FF00;
         padding: 10px;
-    }
-    .section-box {
-        background-color: #F2F4F4;
-        padding: 18px;
-        border-radius: 12px;
-        box-shadow: 0px 0px 10px #D5D8DC;
-        margin-bottom: 30px;
-    }
-    .section-title {
+        border-radius: 10px;
         text-align: center;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
-        color: #117A65;
+        color: black;
     }
-</style>
+
+    .predict-box {
+        background: #FF69B4;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .iris-card {
+        background-color: white;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    </style>
 """, unsafe_allow_html=True)
 
-# ================================
-#   HEADER
-# ================================
-st.markdown("<div class='title-main'>🌸 Tanapon – ระบบจำแนกข้อมูลดอกไม้ (Iris)</div>", unsafe_allow_html=True)
-st.image("./img/Tanapon.jpg", width=250)
+# ------------------------------------------------
 
-# ================================
-#   FLOWER IMAGES SECTION
-# ================================
-st.markdown("<div class='section-box'>", unsafe_allow_html=True)
-st.markdown("<p class='section-title'>ตัวอย่างดอกไม้ทั้ง 3 ประเภท</p>", unsafe_allow_html=True)
+st.markdown('<div class="title-box">🌸 ระบบจำแนกดอกไม้ (Iris Classification)</div>', unsafe_allow_html=True)
+
+st.image("./img/Tanapon.jpg", width=150)
+st.markdown("<h4 style='text-align:center;'>by Tanapon</h4>", unsafe_allow_html=True)
+st.markdown("---")
+
+# ------------------ รูปภาพดอกไม้ ------------------
+st.header("📌 ตัวอย่างข้อมูลดอกไม้")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.image("./img/iris1.jpg", caption="Versicolor")
+   st.markdown('<div class="iris-card"><h4>Versicolor</h4>', unsafe_allow_html=True)
+   st.image("./img/iris1.jpg")
+   st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
-    st.image("./img/iris2.jpg", caption="Verginica")
+   st.markdown('<div class="iris-card"><h4>Virginica</h4>', unsafe_allow_html=True)
+   st.image("./img/iris2.jpg")
+   st.markdown("</div>", unsafe_allow_html=True)
 
 with col3:
-    st.image("./img/iris3.jpg", caption="Setosa")
+   st.markdown('<div class="iris-card"><h4>Setosa</h4>', unsafe_allow_html=True)
+   st.image("./img/iris3.jpg")
+   st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("---")
 
-# ================================
-#   DATA STATISTICS
-# ================================
-st.markdown("<div class='section-box'>", unsafe_allow_html=True)
-st.markdown("<p class='section-title'>📊 สถิติข้อมูลดอกไม้</p>", unsafe_allow_html=True)
+# ------------------ สถิติข้อมูล ------------------
+st.markdown('<div class="sub-box">📊 สถิติข้อมูลดอกไม้</div>', unsafe_allow_html=True)
+st.markdown("")
 
 dt = pd.read_csv("./data/iris.csv")
-st.write(dt.head(10))
+st.dataframe(dt.head(10))
 
-dt1 = dt['petallength'].sum()
-dt2 = dt['petalwidth'].sum()
-dt3 = dt['sepallength'].sum()
-dt4 = dt['sepalwidth'].sum()
+# รวมข้อมูล
+dx = [
+    dt['petallength'].sum(),
+    dt['petalwidth'].sum(),
+    dt['sepallength'].sum(),
+    dt['sepalwidth'].sum()
+]
+dx2 = pd.DataFrame(dx, index=["petal length", "petal width", "sepal length", "sepal width"])
 
-dx = [dt1, dt2, dt3, dt4]
-dx2 = pd.DataFrame(dx, index=["petallength", "petalwidth", "sepallength", "sepalwidth"])
-
-if st.button("แสดงการจินตทัศน์ข้อมูล (Bar Chart)"):
-    st.bar_chart(dx2)
+if st.button("📌 แสดงการจินตทัศน์ข้อมูล"):
+   st.bar_chart(dx2)
 else:
-    st.info("คลิกปุ่มด้านบนเพื่อแสดงข้อมูล")
+    st.write("กดปุ่มด้านบนเพื่อแสดงข้อมูล")
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("---")
 
-# ================================
-#   PREDICT SECTION
-# ================================
-st.markdown("<div class='section-box'>", unsafe_allow_html=True)
-st.markdown("<p class='section-title'>🔍 ทำนายข้อมูลดอกไม้</p>", unsafe_allow_html=True)
+# ------------------ ทำนายข้อมูล ------------------
+st.markdown('<div class="predict-box">🔮 ระบบทำนายข้อมูล</div>', unsafe_allow_html=True)
+st.markdown("")
 
-colA, colB = st.columns(2)
+pt_len = st.slider("เลือกค่า **petallength**", 0.0, 7.0, 1.0)
+pt_wd  = st.slider("เลือกค่า **petalwidth**", 0.0, 3.0, 0.5)
 
-with colA:
-    pt_len = st.slider("เลือก petallength", 0.0, 10.0, 1.0)
-    pt_wd  = st.slider("เลือก petalwidth", 0.0, 10.0, 1.0)
+sp_len = st.number_input("กรุณากรอกค่า **sepallength**", 0.0, 10.0, 5.0)
+sp_wd  = st.number_input("กรุณากรอกค่า **sepalwidth**", 0.0, 5.0, 3.0)
 
-with colB:
-    sp_len = st.number_input("เลือก sepallength", 0.0, 10.0, 1.0)
-    sp_wd  = st.number_input("เลือก sepalwidth", 0.0, 10.0, 1.0)
+st.markdown("")
 
-if st.button("ทำนายผล"):
-    dt = pd.read_csv("./data/iris.csv")
-    X = dt.drop('variety', axis=1)
-    y = dt.variety
+if st.button("🔍 ทำนายผลดอกไม้"):
+   dt = pd.read_csv("./data/iris.csv")
+   X = dt.drop('variety', axis=1)
+   y = dt['variety']
 
-    model = KNeighborsClassifier(n_neighbors=3)
-    model.fit(X, y)
+   model = KNeighborsClassifier(n_neighbors=3)
+   model.fit(X, y)
 
-    x_input = np.array([[pt_len, pt_wd, sp_len, sp_wd]])
-    result = model.predict(x_input)
+   x_input = np.array([[pt_len, pt_wd, sp_len, sp_wd]])
+   output = model.predict(x_input)
 
-    st.subheader(f"ผลการทำนาย: **{result[0]}** 🌸")
+   st.success(f"🌼 ผลการทำนาย: **{output[0]}**")
 
-    if result[0] == 'Setosa':
-        st.image("./img/iris3.jpg", width=250)
-    elif result[0] == 'Versicolor':
-        st.image("./img/iris1.jpg", width=250)
-    else:
-        st.image("./img/iris2.jpg", width=250)
+   # แสดงภาพตามผลลัพธ์
+   if output[0] == 'Setosa':
+        st.image("./img/iris3.jpg", caption="Setosa")
+   elif output[0] == 'Versicolor':
+        st.image("./img/iris1.jpg", caption="Versicolor")
+   else:
+        st.image("./img/iris2.jpg", caption="Virginica")
 else:
-    st.info("กรอกข้อมูลให้ครบ แล้วกดปุ่มเพื่อทำนายผล")
+    st.info("กรุณากรอกข้อมูลและกดปุ่มเพื่อทำนาย")
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("---")
+st.markdown("<center>© 2025 Tanapon | Streamlit Machine Learning App</center>", unsafe_allow_html=True)

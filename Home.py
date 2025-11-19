@@ -73,12 +73,12 @@ with col1:
    st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
-   st.markdown('<div class="iris-card"><h4>Virginica</h4>', unsafe_allow_html=True)
+   st.markdown('<div class="iris-card" style=color:black><h4>Virginica</h4>', unsafe_allow_html=True)
    st.image("./img/iris2.jpg")
    st.markdown("</div>", unsafe_allow_html=True)
 
 with col3:
-   st.markdown('<div class="iris-card"><h4>Setosa</h4>', unsafe_allow_html=True)
+   st.markdown('<div class="iris-card" style=color:black><h4>Setosa</h4>', unsafe_allow_html=True)
    st.image("./img/iris3.jpg")
    st.markdown("</div>", unsafe_allow_html=True)
 
